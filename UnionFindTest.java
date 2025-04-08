@@ -37,7 +37,10 @@ public class UnionFindTest {
 	*/	
 		
 	public static void main( String[] args ) {
-			
+		if(args.length != 1) {
+            System.err.println("Usage: UnionFindTest <filename>\n");
+            System.exit(0);
+        }
 		try {
 			
 			// Legge il file di input con la descrizione della strade
