@@ -46,10 +46,10 @@ public class QuickUnion<D> implements UnionFind<D> {
      * @param node2 the representative of the second set 
 	 */	
 	public void union(UnionFindNode<D> node1, UnionFindNode<D> node2) {
-		if (node1.equals(node2)) return; //nothing to do
+		if (!node1.equals(node2) && (node1.isRepresentative() && node2.isRepresentative())) {  //nothing to do
 			QuickUnionNode<D> downcast = (QuickUnionNode<D>) node2; // safe down casting so we have access to the parent
 			downcast.parent = (QuickUnionNode<D>) node1; // set the parent of the second node to the first one
-
+		}
 
 	}
 	
