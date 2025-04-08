@@ -3,3 +3,4 @@ datastructure.dictionary
 datastructure.list
 datastructure.priorityqueue
 datastructure.tree
+datastructure.unionfind

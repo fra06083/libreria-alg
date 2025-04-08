@@ -80,13 +80,13 @@ public class GenericSortingTest {
         try {
 			
 			
-            // Selectionsort
+       /*     // Selectionsort
             System.out.print("Algorithm: selectionsort ");
             start = System.currentTimeMillis();
             Sorting.selectionsort(A);
             end  = System.currentTimeMillis();
             System.out.println("Time: " + (end-start)/1000.0 +  " sec " + (issorted(A,B) ? "[SORTED]" : "[UNSORTED]"));
-
+      
             // Insertionsort
             System.out.print("Algorithm: insertionsort ");
             A = Arrays.copyOf(C,C.length);
@@ -94,7 +94,7 @@ public class GenericSortingTest {
             Sorting.insertionsort(A);
             end  = System.currentTimeMillis();
             System.out.println("Time: " + (end-start)/1000.0 +  " sec " + (issorted(A,B) ? "[SORTED]" : "[UNSORTED]"));
-
+      */
             // Mergesort
             System.out.print("Algorithm: mergesort     ");
             A = Arrays.copyOf(C,C.length);
