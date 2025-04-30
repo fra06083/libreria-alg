@@ -87,11 +87,8 @@ public class GraphAL<D> implements Graph<D> {
 	 */	
 	public ArrayList<Edge<D>> outEdges(Vertex<D> v) {
 		VertexAL<D> vAL = (VertexAL<D>)v;
-		ArrayList<Edge<D>> e = new ArrayList<Edge<D>>(vAL.adjac.size());
-		Iterator<EdgeAL<D>> it = vAL.adjac.iterator();
-	    for (int i=0; it.hasNext(); i++) {
-			e.add(it.next());
-		}
+		ArrayList<Edge<D>> e = new ArrayList<Edge<D>>();
+        e.addAll(vAL.adjac);
 		return e;
 	}
 	
