@@ -48,9 +48,7 @@ public class GraphAL<D> implements Graph<D> {
 	 */
 	public ArrayList<Vertex<D>> vertexes() { 
 		ArrayList<Vertex<D>> v = new ArrayList<Vertex<D>>(); // inizialmente vuoto
-		for (int i=0; i<n; i++) { // lo scorre tutto, ogni nodo e vertice che viene letto lo aggiunge
-			v.add(vertexes.get(i));
-		}
+		v.addAll(vertexes); // aggiunge tutti i vertici senza scorrere
 
 		return v;  
 	}
