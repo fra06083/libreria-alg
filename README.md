@@ -53,6 +53,14 @@ Per testare l'implementazione dei grafi, compilare GraphTest.java ed eseguire
 - java GraphTest data/grafo.txt 
 - produrrà un grafo non orientato completo con 3 vertici e lo stamperà, poi rimuoverà il primo arco del primo vertice e lo ristamperà e poi rimuoverà completamente il primo vertice e lo ristamperà
 
+Per testare l'implementazione delle visite dei grafi, compilare GraphVisitTest.java ed eseguire
+- java GraphVisitTest data/grafoVisite.txt 
+- leggerà dal file grafoVisite.txt il grafo riportato nella slide 63 del file 17-VisiteGrafi.pdf in cui i vertivi vengono numerati da 0 a 10 secondo il discovery time, poi stamperà il grafo letto, l'albero di visita BFS partendo dal vertice 0, e l'albero di visita DFS.
+
+Per testare l'implementazione degli algoritmi per il calcolo del MST, compilare MSTTest.java ed eseguire
+- java MSTTest data/grafoMST.txt 
+- leggerà dal file grafoMST.txt il grafo riportato nella slide 4 del file 18-MinimumSpanningTree.pdf in cui i vertivi vengono numerati da 0 a 8 secondo l'ordine alfabetico delle lettere riportate nella slide, poi stamperà il minimum spanning tree calcolato (elenca tutte le adiacenze con a fianco il peso dell'arco relativo) ed il suo costo totale. Per testare le possibili implementazioni bisogna modificare il file MSTTest.java alla riga 82, eseguendo una new su Kruskal e Prim.
+
 Per generare tutta la documentazione in formato html:
 - creare una directory <i>doc/</i> allo stesso livello delle directory <i>algorithm/</i> e <i>datastructure/</i>
 - entrare nella directory <i>doc/</i>

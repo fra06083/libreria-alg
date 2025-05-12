@@ -32,7 +32,7 @@ public class QuickUnion<D> implements UnionFind<D> {
 	 * @return the inserted node
 	 */
 	public UnionFindNode<D> makeSet(D data) {
-		UnionFindNode<D> n = new QuickUnionNode<D>(data); //crea il nodo per il nuovo dato
+		QuickUnionNode<D> n = new QuickUnionNode<D>(data); //crea il nodo per il nuovo dato
 		nodes.add(n); //aggiunge il nodo all'arraylist dei nodi
 		return n; //restituisce il nodo appena creato
 	}
@@ -46,11 +46,9 @@ public class QuickUnion<D> implements UnionFind<D> {
      * @param node2 the representative of the second set 
 	 */	
 	public void union(UnionFindNode<D> node1, UnionFindNode<D> node2) {
-		if (!node1.equals(node2) && (node1.isRepresentative() && node2.isRepresentative())) {  //nothing to do
-			QuickUnionNode<D> downcast = (QuickUnionNode<D>) node2; // safe down casting so we have access to the parent
-			downcast.parent = (QuickUnionNode<D>) node1; // set the parent of the second node to the first one
+		if (node1.isRepresentative() && node2.isRepresentative() && node1!=node2) {
+				((QuickUnionNode<D>) node2).parent = (QuickUnionNode<D>) node1;
 		}
-
 	}
 	
 	/**
@@ -64,12 +62,13 @@ public class QuickUnion<D> implements UnionFind<D> {
    	 * @param node the node to consider 
      * @return the representative of the set to which the node belongs to
 	 */
+
+
 	public UnionFindNode<D> find(UnionFindNode<D> node) {
-		while (!node.isRepresentative()) { //while the node is not the representative
-			QuickUnionNode<D> nodeSearch = (QuickUnionNode<D>) node; // safe casting
-			nodeSearch = nodeSearch.parent;
+		while (!node.isRepresentative()) {
+			node = ((QuickUnionNode<D>) node).parent;                      
 		}
-		return node; //return the representative
+		return node;
 	}
 	
 	/**

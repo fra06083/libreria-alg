@@ -37,10 +37,7 @@ public class UnionFindTest {
 	*/	
 		
 	public static void main( String[] args ) {
-		if(args.length != 1) {
-            System.err.println("Usage: UnionFindTest <filename>\n");
-            System.exit(0);
-        }
+			
 		try {
 			
 			// Legge il file di input con la descrizione della strade
@@ -58,6 +55,10 @@ public class UnionFindTest {
 			ArrayList<Integer> dst = new ArrayList<Integer>();
 			String st;
 			int max=0,s,d,v;
+			if(args.length != 1) {
+				System.err.println("Usage: UnionFindTest <filename>\n");
+				System.exit(0);
+			}
 			while ((st = br.readLine()) != null) {
 				v = st.indexOf("\t");
 				s = Integer.valueOf(st.substring(0,v));

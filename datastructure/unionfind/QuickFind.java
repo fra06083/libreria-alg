@@ -34,7 +34,7 @@ public class QuickFind<D> implements UnionFind<D> {
 	 * @return the inserted node
 	 */
 	public UnionFindNode<D> makeSet(D data) {
-		UnionFindNode<D> n = new QuickUnionNode<D>(data); //crea il nodo per il nuovo dato
+		QuickFindNode<D> n = new QuickFindNode<D>(data); //crea il nodo per il nuovo dato
 		nodes.add(n); //aggiunge il nodo all'arraylist dei nodi
 		return n; //restituisce il nodo appena creato
 	}
@@ -64,6 +64,7 @@ public class QuickFind<D> implements UnionFind<D> {
 				n2 = n2.next;
 			}
 		}
+
 	}
 	
 	/**
@@ -81,7 +82,7 @@ public class QuickFind<D> implements UnionFind<D> {
 	 * Returns a printable string representation of Union Find structure. 
 	 * For each node prints its contents and the corresponding representative. 
 	 * Cost &Theta;(n), where n is the number of nodes in the structure
-	 * @return string representation of the> Union Find structure
+	 * @return string representation of the Union Find structure
 	 */
 	@Override
 	public String toString() {
