@@ -44,7 +44,7 @@ public class DHeap<K extends Comparable<K>,D> implements PriorityQueue<K,D>{
 		if (nodes.isEmpty()) {
 			return null;
 		} else {
-			return nodes.getFirst().data;
+			return nodes.get(0).data;
 		}
 	}
 
@@ -60,10 +60,10 @@ public class DHeap<K extends Comparable<K>,D> implements PriorityQueue<K,D>{
 	* @return the inserted node
 	*/
 	public PriorityQueueNode<K,D> insert(K key, D data) {
-		DHeapNode<K,D> newNode = new DHeapNode<K, D>(key, data, nodes.size());
+		DHeapNode<K,D> newNode = new DHeapNode<K, D>(key, data, n);
 		nodes.add(newNode);
-		moveUp(newNode);
 		n++;
+		moveUp(newNode);
 		return newNode;
 	}
 
@@ -76,10 +76,10 @@ public class DHeap<K extends Comparable<K>,D> implements PriorityQueue<K,D>{
 	* @param node the node to remove
 	*/
 	public void delete(PriorityQueueNode<K,D> node) {
-		DHeapNode<K, D> u = nodes.getLast(); //estrae l'ultimo nodo e lo salva in u
+		DHeapNode<K, D> u = nodes.remove(n-1); //estrae l'ultimo nodo e lo salva in u
 		n--; //decrementa il numero di nodi
 		if (u != node){
-		int i =((DHeapNode<K,D>) node).getIndex(); //indice nodo da eliminare
+		int i =((DHeapNode<K,D>) node).index; //indice nodo da eliminare
 		nodes.set(i,u); //inserisce u al posto del nodo da eliminare
 		u.index = i; //sistema il campo index del nodo spostato
 		moveUp(u); //sistema la posizione del nodo u
@@ -98,8 +98,7 @@ public class DHeap<K extends Comparable<K>,D> implements PriorityQueue<K,D>{
 		if (nodes.isEmpty()) {
 			return;
 		}
-		DHeapNode<K,D> min = nodes.getFirst();
-		delete(min);
+		delete(nodes.get(0));
 	}
 	
 	/**
@@ -112,8 +111,8 @@ public class DHeap<K extends Comparable<K>,D> implements PriorityQueue<K,D>{
 	*  @param node the node where the key should be increased
 	*/	
 	public void increaseKey(K newKey, PriorityQueueNode<K,D> node) {
-		DHeapNode<K,D> dHeapNode = (DHeapNode<K,D>) node;
-		if (newKey.compareTo(dHeapNode.getKey()) > 0) {
+		if (newKey.compareTo(node.getKey()) < 0) {
+			DHeapNode<K,D> dHeapNode = (DHeapNode<K,D>) node;
 			dHeapNode.setKey(newKey);
 			moveDown(dHeapNode);
 		}

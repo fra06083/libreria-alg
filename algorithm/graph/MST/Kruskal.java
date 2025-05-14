@@ -3,6 +3,7 @@ package algorithm.graph.MST;
 import datastructure.graph.*;
 import datastructure.unionfind.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Comparator;
@@ -20,7 +21,7 @@ public class Kruskal<D> implements MST<D> {
 	 * @paramArrayList<VertexAL<D>>() graph the graph for which the Minimum Spanning Tree must be computed
 	 * @return the graph representing the computed Minimum Spanning Tree
 	 */	
-	public Graph < D > MinimumSpanningTree(Graph <D> graph) {
+	public Graph <D> MinimumSpanningTree(Graph <D> graph) {
 		//strutture dati ausiliarie
 		GraphAL<D> g = new GraphAL<D> (); //grafo per rappresentare il MST da restituire alla fine
 		Map<Vertex<D>, Vertex<D>> newVert = new HashMap<Vertex<D>, Vertex<D>>(); //mappa tra vecchi e nuovi vert.
@@ -30,25 +31,23 @@ public class Kruskal<D> implements MST<D> {
 		  newVert.put(v, g.addVertex(v.getData())); //nuovo vertice associato a v
 		  ufnodes.put(v, uf.makeSet(v.getData())); //singoletto in uf associato a v
 		}
-		ArrayList <Edge<D>> e = graph.edges(); //estrae gli archi dal grafo
+
+        List<Edge<D>> e	 = new ArrayList<>(graph.edges());
 		e.sort(new CompEdge()); //ordina gli archi usando specifico comparator per archi
-		System.out.println(e.toString()); //stampa gli archi ordinati
+
 		System.out.println("Archi ordinati: "); //stampa gli archi ordinati
-		for (int i=0; i<e.size();i++){
-			Edge<D> edge = e.get(i); //sorgente dell'arco i
+		for (Edge<D> edge : e) {
 			Vertex<D> u = edge.getSource();
 		    Vertex<D> v = edge.getDest();
 		  	double w = edge.getWeight();
 		  	UnionFindNode<D> ru = uf.find(ufnodes.get(u)); //rappresentante del set della sorgente
 		  	UnionFindNode<D> rv = uf.find(ufnodes.get(v)); //rappresentante del set della destinazione
 		  	if (ru != rv) { //set disgiunti quindi l'arco deve essere selezionato
-			//	uf.union(ru, rv); //unisce i set di sorgente e destinazione
-			    uf.union(ru, rv);
+			    uf.union(ru, rv); //unisce i set di sorgente e destinazione
 				g.addEdge(newVert.get(u), newVert.get(v), w); //aggiunge arco in g
 				g.addEdge(newVert.get(v), newVert.get(u), w); //in entrambe le direzioni
 		  	}
 		}
-		System.out.println("Costo totale: "); //stampa il costo totale
 		return g; //restituisce il grafo MST
 	  }
 	/**
@@ -56,10 +55,8 @@ public class Kruskal<D> implements MST<D> {
 	 */	
 	private class CompEdge implements Comparator<Edge<D>> {
 		public int compare(Edge<D> e1, Edge<D> e2) {
-			if (e1.getWeight() > e2.getWeight())
-				return 1; 
-			else
-				return -1;
+			// Non è meglio fare così?
+			return Double.compare(e1.getWeight(), e2.getWeight());
 		}
 	}
 

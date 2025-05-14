@@ -43,7 +43,7 @@ public class QuickUnionRank<D> extends QuickUnion<D> {
 	 */		
 	@Override
 	public void union(UnionFindNode <D> node1, UnionFindNode <D> node2) {
-	    if (!node1.equals(node2) && (node1.isRepresentative() && node2.isRepresentative())) { //nothing to do
+	    if (!node1.equals(node2) && node1.isRepresentative() && node2.isRepresentative()) { //nothing to do
 	        QuickUnionRankNode <D> n1 = (QuickUnionRankNode <D> ) node1; // down casting so we have access to the rank
 	        QuickUnionRankNode <D> n2 = (QuickUnionRankNode <D> ) node2; // down casting so we have access to the rank
 	        if (n1.rank >= n2.rank) {
@@ -51,7 +51,7 @@ public class QuickUnionRank<D> extends QuickUnion<D> {
 	            if (n1.rank == n2.rank) 
 				  n1.rank = n1.rank + 1;
 	            //controlla se il rango aumenta
-	            else
+			 } else {
 	                super.union(node2, node1); //rende node1 figlio di node2
 	        }
 	    }

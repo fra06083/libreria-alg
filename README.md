@@ -61,6 +61,14 @@ Per testare l'implementazione degli algoritmi per il calcolo del MST, compilare 
 - java MSTTest data/grafoMST.txt 
 - leggerà dal file grafoMST.txt il grafo riportato nella slide 4 del file 18-MinimumSpanningTree.pdf in cui i vertivi vengono numerati da 0 a 8 secondo l'ordine alfabetico delle lettere riportate nella slide, poi stamperà il minimum spanning tree calcolato (elenca tutte le adiacenze con a fianco il peso dell'arco relativo) ed il suo costo totale. Per testare le possibili implementazioni bisogna modificare il file MSTTest.java alla riga 82, eseguendo una new su Kruskal e Prim.
 
+Per testare l'implementazione degli algoritmi per il calcolo dei cammini minimi da singola sorgente, compilare ShortestPathTest.java ed eseguire
+- java ShortestPathTest data/grafoCamminiMinimi.txt 
+- leggerà dal file grafoCamminiMinimi.txt il grafo riportato nella slide 35 del file 19-CamminiMinimi.pdf in cui i vertivi vengono numerati da 0 a 6 secondo l'ordine alfabetico delle lettere riportate nella slide, poi stamperà le distanze dei vertici rispetto al vertice di partenza 0. Per testare le possibili implementazioni bisogna modificare il file ShortestPathTest.java alla riga 79, eseguendo una new su BellmanFord e Dijkstra.
+
+Per testare l'implementazione dell'algoritmo Floyd-Warshall, compilare AllPairsShortestPathTest.java ed eseguire
+- java AllPairsShortestPathTest data/grafoCamminiMinimi.txt 
+- leggerà dal file grafoCamminiMinimi.txt il grafo riportato nella slide 62 del file 19-CamminiMinimi.pdf in cui i vertivi vengono numerati da 0 a 6 secondo l'ordine alfabetico delle lettere riportate nella slide, poi stamperà le distanze per ogni coppia di vertici.
+
 Per generare tutta la documentazione in formato html:
 - creare una directory <i>doc/</i> allo stesso livello delle directory <i>algorithm/</i> e <i>datastructure/</i>
 - entrare nella directory <i>doc/</i>

@@ -1,34 +1,30 @@
 /* ************************************************
- * Classe per testare gil algoritmi MST
+ * Classe per testare gli algoritmi di ricerca dei single-source shortest paths
  * 
  * Esempio di esecuzione:
  *
- * java MSTTest fileIn 
+ * java ShortestPathTest fileIn 
  * 
- * dove "fileIn" è il nome di un file che contiene la descrizione di un grafo non orientato pesato:
+ * dove "fileIn" è il nome di un file che contiene la descrizione di un grafo orientato pesato:
  * ad ogni riga del file si riportano gli indici di due nodi collegati da un arco e del relativo peso
  * separati da un TAB. 
- * NOTA: essendo il grafo non orientato, è sufficiente descrivere un arco una sola volta 
- * (ci pensa il programma a inserire due volte l'arco considerando separatamente
- * le due direzioni possibili)
  * 
- * Dopo aver letto il file, crea il grafo relativo, ne calcola il minimum spanning tree, poi
- * stampa il minimum spanning tree ed il relativo costo totale
+ * Dopo aver letto il file, crea il grafo relativo, ne calcola i cammini minimi da singole sorgente
+ * considerando il prigmo vertice, poi stampa le distanze dei vertici dalla sorgente
  *
  * *************************************************/
 
 
 import java.io.*;
 import java.util.*;
-import algorithm.graph.MST.*;
 import datastructure.graph.*;
+import algorithm.graph.SSSP.*;
 
-
-public class MSTTest {	
+public class ShortestPathTest {	
 		
 	/*
-	* Main per leggere un file che reppresenta un grafo, calcolare il suo 
-	* Minimum Spanning Tree e stamparlo
+	* Main per leggere un file che reppresenta un grafo e calcolare i cammini minimi
+	* a partire dal primo vertice
 	*/	
 	public static void main( String[] args ) {
 			
@@ -74,34 +70,36 @@ public class MSTTest {
 			for (int j=0; j<src.size(); j++) {
 				g.addEdge(nodi.get(src.get(j)),
 					nodi.get(dst.get(j)),pesi.get(j));
-				g.addEdge(nodi.get(dst.get(j)),
-					nodi.get(src.get(j)),pesi.get(j));
-			}
+			}			
 			
-			// Calcola il Minimum Spanning Tree
-			MST<Integer> mst = new Prim<Integer>();
-		    Graph<Integer> t = mst.MinimumSpanningTree(g);
-
-			// Stampa il Minimum Spanning Tree ed il relativo costo
-			ArrayList<Vertex<Integer>> vert = t.vertexes();
-			for (int i=0; i<t.vertexNum(); i++) {
-				System.out.println("Adiacenti a: "+(vert.get(i)).getData());
-				ArrayList<Edge<Integer>> archi = t.outEdges(vert.get(i));
-				for (int j=0; j<g.outDegree(vert.get(i)); j++) {
-					System.out.print( "  "+ (archi.get(j)).getDest().getData()+" "+
-						(archi.get(j)).getWeight() );
-				}
-				System.out.println();
+			// Calcola i camminimi minimi dal primo vertice
+			SSSP<Integer> cammini;
+			Map<Vertex<Integer>,Edge<Integer>> parent;
+				
+			cammini = new BellmanFord<Integer>();
+			parent = cammini.SingleSourceShortestPaths(g, nodi.get(0));
+			
+			// Stampa le distanze dei vertici dalla sorgente
+			for (int i=0; i<nodi.size(); i++) {
+				System.out.println( "Distanza nodo " + nodi.get(i).getData() + " : " +
+					computeDist(parent,nodi.get(i),nodi.get(0)) );
 			}
-			double totPesi = 0;
-			ArrayList<Edge<Integer>> e = t.edges();
-			for (int i=0; i < e.size(); i++) totPesi = totPesi + e.get(i).getWeight();
-			System.out.println("Costo tot: "+totPesi/2);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	// Calcola la distanza di un vertice v da s considerando l'albero dei cammini minimi da s rappresentato da parent
+	private static double computeDist(Map<Vertex<Integer>,Edge<Integer>> parent, Vertex<Integer> v, Vertex<Integer> s) {
+		if (v!=s && parent.get(v) == null) return Double.POSITIVE_INFINITY;
+		int d = 0;
+		while (v != s) {
+			d += parent.get(v).getWeight();
+			v = parent.get(v).getSource();
+		}
+		return d;
 	}
 	
 }
