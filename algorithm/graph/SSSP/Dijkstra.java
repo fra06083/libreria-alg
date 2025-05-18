@@ -27,11 +27,41 @@ public class Dijkstra<D> implements SSSP<D> {
 	 * @param source the initial source vertex
 	 * @return the tree of the shortest paths represented as a map from each vertex to the incoming edge in the tree	
 	 */	
-	public Map<Vertex<D>,Edge<D>> SingleSourceShortestPaths(Graph<D> graph, Vertex<D> source) {
+	public Map<Vertex<D>, Edge<D>> SingleSourceShortestPaths(Graph<D> graph, Vertex<D> source) {
+		// Strutture dati ausiliarie
+		PriorityQueue<Double, Vertex<D>> pq = new DHeap<>();
+		Map<Vertex<D>, PriorityQueueNode<Double, Vertex<D>>> pqnodes = new HashMap<>();
+		Map<Vertex<D>, Double> distance = new HashMap<>();
+		Map<Vertex<D>, Edge<D>> parent = new HashMap<>();
 
+		ArrayList<Vertex<D>> vert = graph.vertexes();
+		for (Vertex<D> v : vert) {
+			distance.put(v, Double.POSITIVE_INFINITY); // inizializza distanza
+			parent.put(v, null); // nessun parent identificato
+		}
+		distance.put(source, 0.0); // source a distanza 0 da se stessa
+		pqnodes.put(source, pq.insert(0.0, source)); // inserimento source in coda
 
-		return null;		
+		while (!pq.isEmpty()) { // finché ci sono vertici nella coda
+			Vertex<D> u = pq.findMin();
+			pq.deleteMin();
+
+			for (Edge<D> e : graph.outEdges(u)) { // controlla le adiacenze
+				Vertex<D> d = e.getDest(); // sia d l'adiacenza da considerare
+				double newDist = distance.get(u) + e.getWeight();
+
+				if (distance.get(d) == Double.POSITIVE_INFINITY) { // d mai incontrato
+					distance.put(d, newDist); // setta distanza
+					parent.put(d, e); // indicare il parent momentaneo
+					pqnodes.put(d, pq.insert(newDist, d)); // inserisce d in pq
+				} else if (distance.get(d) > newDist) {
+					// si è trovato un arco migliore per aggiungere d
+					distance.put(d, newDist); // aggiorna distanza
+					parent.put(d, e); // aggiorna parent
+					pq.decreaseKey(newDist, pqnodes.get(d)); // aggiorna chiave in pq
+				}
+			}
+		}
+		return parent;
 	}
-
 }
-
